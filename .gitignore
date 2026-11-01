@@ -1,0 +1,6 @@
+
+# Local backups and Python cache
+*.backup
+*.pre_ai_backup
+__pycache__/
+*.py[cod]

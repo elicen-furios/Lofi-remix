@@ -4,6 +4,7 @@ import re
 import uuid
 import shutil
 import subprocess
+import requests
 from pathlib import Path
 from flask import Flask, request, jsonify, send_file, send_from_directory
 from flask_cors import CORS
@@ -486,6 +487,106 @@ def example_render():
             output.unlink(missing_ok=True)
             return jsonify(error=(proc.stderr or "Could not process the example song.")[-600:]), 500
     return send_file(output, mimetype="audio/mpeg", conditional=True)
+
+
+
+@app.post("/api/ai/cover")
+def generate_ai_cover():
+    """Submit cover-art generation to Pixazo without exposing the API key."""
+    api_key = os.environ.get("PIXAZO_API_KEY", "").strip()
+    if not api_key:
+        return jsonify(error="Pixazo is not configured on the server."), 503
+
+    data = request.get_json(silent=True) or {}
+    prompt = str(data.get("prompt", "")).strip()
+
+    if len(prompt) < 3 or len(prompt) > 3000:
+        return jsonify(error="Prompt must contain 3–3000 characters."), 400
+
+    try:
+        response = requests.post(
+            "https://gateway.pixazo.ai/gpt-image-2/v1/text-to-image",
+            headers={
+                "Ocp-Apim-Subscription-Key": api_key,
+                "Content-Type": "application/json",
+                "Cache-Control": "no-cache",
+            },
+            json={"prompt": prompt},
+            timeout=30,
+        )
+
+        if response.status_code not in (200, 202):
+            return jsonify(
+                error=f"Pixazo request failed ({response.status_code}).",
+                details=response.text[:500]
+            ), 502
+
+        result = response.json()
+        request_id = result.get("request_id")
+        if not request_id:
+            return jsonify(error="Pixazo returned no request ID."), 502
+
+        return jsonify(
+            request_id=request_id,
+            status=result.get("status", "QUEUED"),
+        ), 202
+
+    except requests.RequestException:
+        return jsonify(error="Could not connect to Pixazo. Try again later."), 502
+    except ValueError:
+        return jsonify(error="Pixazo returned an invalid response."), 502
+
+
+@app.get("/api/ai/cover/status/<request_id>")
+def ai_cover_status(request_id):
+    """Check Pixazo job status using a fixed, trusted API endpoint."""
+    api_key = os.environ.get("PIXAZO_API_KEY", "").strip()
+    if not api_key:
+        return jsonify(error="Pixazo is not configured on the server."), 503
+
+    if not re.fullmatch(r"[A-Za-z0-9_-]{1,200}", request_id):
+        return jsonify(error="Invalid request ID."), 400
+
+    try:
+        response = requests.get(
+            "https://gateway.pixazo.ai/v2/requests/status/"
+            + request_id,
+            headers={"Ocp-Apim-Subscription-Key": api_key},
+            timeout=20,
+        )
+
+        if response.status_code != 200:
+            return jsonify(
+                error=f"Pixazo status check failed ({response.status_code})."
+            ), 502
+
+        result = response.json()
+        state = str(result.get("status", "UNKNOWN")).upper()
+        output = result.get("output") or {}
+        urls = output.get("media_url") or []
+        image_url = urls[0] if urls else None
+
+        # Only return a public image URL from the expected CDN domain.
+        if image_url:
+            from urllib.parse import urlparse
+            parsed = urlparse(image_url)
+            if parsed.scheme != "https" or not (
+                parsed.hostname or ""
+            ).endswith(".r2.dev"):
+                image_url = None
+
+        return jsonify(
+            request_id=request_id,
+            status=state,
+            image_url=image_url if state == "COMPLETED" else None,
+            error=result.get("error"),
+        )
+
+    except requests.RequestException:
+        return jsonify(error="Could not check Pixazo job status."), 502
+    except ValueError:
+        return jsonify(error="Pixazo returned an invalid status response."), 502
+
 
 @app.post("/api/process")
 def process_audio():

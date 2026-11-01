@@ -119,7 +119,32 @@ footer{border-top:1px solid rgba(156,121,255,.13);margin-top:30px;color:#717c9c!
   <div id="result" class="hidden mt-6 rounded-2xl border border-emerald-400/30 bg-emerald-950/10 p-4"><div class="flex items-center justify-between gap-3 mb-3"><h3 class="font-bold text-emerald-200">Rendered output</h3><a id="download" class="pill" download="Akhil_Studio_Output.mp3">Download file ↓</a></div><audio id="outputPlayer" controls class="w-full hidden"></audio><img id="outputImage" class="hidden w-full rounded-xl" alt="Generated audio visualization"><pre id="outputInfo" class="hidden whitespace-pre-wrap text-sm"></pre></div>
   </div>
  </section>
- <footer class="muted text-xs text-center py-8">AKHIL AUDIO STUDIO PRO · Shape your sound. Build your vibe. Master your mix.</footer>
+
+<section class="mt-8 rounded-2xl border border-violet-400/30 bg-violet-950/10 p-5">
+  <h2 class="text-xl font-bold mb-2">AI Music Cover Art</h2>
+  <p class="muted text-sm mb-4">
+    Create original cover artwork with Pixazo. Generation may take a little time.
+  </p>
+  <label for="coverPrompt" class="block text-sm font-semibold mb-2">
+    Describe your cover
+  </label>
+  <textarea id="coverPrompt" maxlength="3000" rows="3"
+    class="w-full rounded-xl border border-violet-400/30 bg-slate-950/70 p-3"
+    placeholder="Example: atmospheric purple night sky, rainy city, cinematic album artwork"></textarea>
+  <button id="generateCover" class="btn mt-3 w-full" type="button">
+    Generate Cover Art
+  </button>
+  <p id="coverState" class="muted text-sm mt-3" role="status"></p>
+  <div id="coverResult" class="hidden mt-4">
+    <img id="coverImage" class="w-full rounded-xl" alt="AI-generated music cover art">
+    <a id="coverDownload" class="pill inline-block mt-3" target="_blank"
+       rel="noopener noreferrer" download="Akhil_Music_Cover.png">
+       Open or download cover
+    </a>
+  </div>
+</section>
+
+<footer class="muted text-xs text-center py-8">AKHIL AUDIO STUDIO PRO · Shape your sound. Build your vibe. Master your mix.</footer>
 </main>
 <script>
 const groups = [
@@ -273,6 +298,72 @@ function loadFile(f){if(!f)return;file=f;const sourceUrl=URL.createObjectURL(f);
 $("globalFile").onchange=e=>loadFile(e.target.files[0]);
 $("effectFile").onchange=e=>{loadFile(e.target.files[0]);e.target.value=""};
 $("render").onclick=async()=>{if(!file){alert("Load an audio file first.");return}if(!active)return;const btn=$("render");btn.disabled=true;$("renderState").textContent="Creating your sound…";$("result").classList.add("hidden");try{const fd=new FormData();fd.append("audio",file);fd.append("tool",active.id);fd.append("param1",$("param1").value);fd.append("param2",$("param2").value);fd.append("start",$("trimStart").value);fd.append("end",$("trimEnd").value);fd.append("format",$("format").value);const res=await fetch("/api/process",{method:"POST",body:fd});if(!res.ok){let j={};try{j=await res.json()}catch{}throw Error(j.error||"Processing failed")}const blob=await res.blob();if(outputUrl)URL.revokeObjectURL(outputUrl);outputUrl=URL.createObjectURL(blob);$('afterPlayer').src=outputUrl;$('compareHint').textContent='Processed output ready. Play both samples to compare.';$('result').classList.remove("hidden");imageMode=["spectrogram","waveform"].includes(active.id);$("outputPlayer").classList.toggle("hidden",imageMode);$("outputImage").classList.toggle("hidden",!imageMode);$("outputInfo").classList.add("hidden");if(imageMode){$("outputImage").src=outputUrl;$("download").download=`Akhil_${active.id}.png`}else{$("outputPlayer").src=outputUrl;$("download").download=`Akhil_${active.id}.${active.id==="converter"?$("format").value:"mp3"}`;$("outputPlayer").play().catch(()=>{})}$("download").href=outputUrl;$("renderState").textContent="Your track is ready!"}catch(err){$("renderState").textContent="Render failed.";alert(err.message)}finally{btn.disabled=false}};
+
+const coverButton = document.getElementById("generateCover");
+if (coverButton) {
+  coverButton.addEventListener("click", async () => {
+    const prompt = document.getElementById("coverPrompt").value.trim();
+    const state = document.getElementById("coverState");
+    const resultBox = document.getElementById("coverResult");
+
+    if (prompt.length < 3) {
+      state.textContent = "Please enter a more detailed prompt.";
+      return;
+    }
+
+    coverButton.disabled = true;
+    resultBox.classList.add("hidden");
+    state.textContent = "Submitting cover-art request…";
+
+    try {
+      const submit = await fetch("/api/ai/cover", {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({prompt})
+      });
+      const submitted = await submit.json();
+      if (!submit.ok) throw new Error(submitted.error || "Could not submit request.");
+
+      const requestId = submitted.request_id;
+      state.textContent = "Generation started. Checking progress…";
+
+      let completed = false;
+      for (let i = 0; i < 60; i++) {
+        await new Promise(resolve => setTimeout(resolve, 5000));
+
+        const poll = await fetch(
+          "/api/ai/cover/status/" + encodeURIComponent(requestId)
+        );
+        const job = await poll.json();
+        if (!poll.ok) throw new Error(job.error || "Status check failed.");
+
+        if (job.status === "COMPLETED" && job.image_url) {
+          document.getElementById("coverImage").src = job.image_url;
+          document.getElementById("coverDownload").href = job.image_url;
+          resultBox.classList.remove("hidden");
+          state.textContent = "Cover art is ready!";
+          completed = true;
+          break;
+        }
+
+        if (["FAILED", "ERROR"].includes(job.status)) {
+          throw new Error(job.error || "Pixazo could not generate the image.");
+        }
+
+        state.textContent = "Cover art is processing… (" + job.status + ")";
+      }
+
+      if (!completed) {
+        state.textContent = "Still processing. Please try checking again later.";
+      }
+    } catch (err) {
+      state.textContent = "Cover generation failed: " + err.message;
+    } finally {
+      coverButton.disabled = false;
+    }
+  });
+}
+
 fetch("/api/status").then(r=>r.json()).then(s=>{$("serverState").textContent=s.status==="online"?"FFmpeg engine online":"FFmpeg missing";$("serverState").classList.toggle("text-emerald-200",s.status==="online")}).catch(()=>$("serverState").textContent="Server offline");
 renderCategories();renderCards();
 </script>
