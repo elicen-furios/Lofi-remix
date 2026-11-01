@@ -1,0 +1,304 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Akhil Audio Studio Pro</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+:root{color-scheme:dark;--bg:#080b12;--panel:#101723;--line:#263448;--cyan:#66e3ff;--purple:#9b8cff}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 12% 0%,#163042 0,transparent 34%),radial-gradient(ellipse at 90% 12%,#251d48 0,transparent 32%),var(--bg);color:#edf4fb;font-family:Inter,ui-sans-serif,system-ui,-apple-system,sans-serif}
+.glass{background:linear-gradient(145deg,rgba(20,30,45,.92),rgba(12,17,28,.94));border:1px solid var(--line);box-shadow:0 18px 55px #0004}
+.card{background:linear-gradient(150deg,#141f2e,#0e1521);border:1px solid #263448;transition:.18s ease;cursor:pointer}.card:hover{transform:translateY(-3px);border-color:#66e3ff88;box-shadow:0 12px 34px #0006}.card.active{border-color:var(--cyan);box-shadow:0 0 0 1px #66e3ff22}
+.pill{border:1px solid #314256;background:#0b121d;border-radius:999px;padding:6px 10px;font-size:11px;color:#a9b8ca}
+input[type=range]{width:100%;accent-color:var(--cyan)}button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid var(--cyan);outline-offset:2px}
+.btn{background:linear-gradient(100deg,#4ac9e8,#8d7cff);color:#08111a;font-weight:800;border-radius:12px;padding:13px 16px;transition:.15s}.btn:disabled{opacity:.5;cursor:wait}
+.muted{color:#94a6ba}.mono{font-family:ui-monospace,SFMono-Regular,Menlo,monospace}
+
+/* AKHIL AUDIO STUDIO — premium neon workstation redesign */
+:root{--bg:#070812;--panel:#101322;--line:rgba(155,143,255,.22);--cyan:#69f0ff;--purple:#9c79ff;--pink:#ff68c9;--muted:#a4acc5}
+html{scroll-behavior:smooth;scroll-padding-top:88px}
+body{min-height:100vh;background:#070812;color:#f4f5ff;font-family:Inter,ui-sans-serif,system-ui,-apple-system,sans-serif;overflow-x:hidden;position:relative}
+body:before{content:"";position:fixed;inset:0;pointer-events:none;z-index:-2;background:radial-gradient(ellipse at 8% 8%,rgba(0,205,255,.14),transparent 32%),radial-gradient(ellipse at 92% 5%,rgba(145,72,255,.18),transparent 35%),radial-gradient(ellipse at 55% 90%,rgba(255,66,182,.08),transparent 35%),linear-gradient(145deg,#070812,#0b0d1b 50%,#080812)}
+body:after{content:"";position:fixed;inset:0;pointer-events:none;z-index:-1;opacity:.14;background-image:linear-gradient(rgba(255,255,255,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.035) 1px,transparent 1px);background-size:42px 42px;mask-image:linear-gradient(to bottom,black,transparent 85%)}
+header.sticky{background:rgba(7,8,18,.82)!important;border-color:rgba(155,143,255,.2)!important;box-shadow:0 12px 38px rgba(0,0,0,.22);backdrop-filter:blur(22px)}
+header .h-11{background:linear-gradient(145deg,rgba(105,240,255,.17),rgba(156,121,255,.2))!important;border:1px solid rgba(105,240,255,.38)!important;box-shadow:0 0 24px rgba(105,240,255,.09),inset 0 0 18px rgba(156,121,255,.08)}
+header .tracking-wide{font-size:15px;letter-spacing:.11em}header .tracking-\[\.24em\]{color:#8790ad}
+.glass{background:linear-gradient(135deg,rgba(22,24,44,.88),rgba(12,13,27,.91));border:1px solid rgba(156,121,255,.24);box-shadow:0 24px 70px rgba(0,0,0,.32),inset 0 1px rgba(255,255,255,.035);backdrop-filter:blur(18px);position:relative;overflow:hidden}
+.glass:before{content:"";position:absolute;top:0;left:7%;right:7%;height:1px;background:linear-gradient(90deg,transparent,rgba(105,240,255,.65),rgba(255,104,201,.45),transparent);pointer-events:none}
+main.max-w-7xl{padding-top:30px!important}
+main>section:first-child{gap:18px!important}
+main>section:first-child>.glass:first-child{min-height:290px;display:flex;flex-direction:column;justify-content:center;padding:clamp(24px,4vw,48px)!important;background:radial-gradient(ellipse at 90% 8%,rgba(156,121,255,.15),transparent 35%),linear-gradient(135deg,rgba(20,25,48,.96),rgba(10,12,25,.95));}
+main>section:first-child>.glass:first-child h1{letter-spacing:-.055em;line-height:1.02;font-size:clamp(2.5rem,5.5vw,4.65rem);text-wrap:balance}
+main>section:first-child>.glass:first-child h1 span{background:linear-gradient(100deg,#71f0ff 0%,#a48aff 48%,#ff83d3 100%);background-clip:text;-webkit-background-clip:text;color:transparent;filter:drop-shadow(0 0 24px rgba(105,240,255,.13))}
+main>section:first-child>.glass:first-child p{max-width:570px;font-size:15px;line-height:1.8;color:#aeb5ce}
+.pill{border:1px solid rgba(156,121,255,.25);background:rgba(11,13,29,.72);border-radius:999px;padding:8px 12px;font-size:11px;letter-spacing:.025em;color:#c0c8e0;white-space:normal}
+main>section:first-child>.glass:first-child>.pill{align-self:flex-start;letter-spacing:.12em;font-size:10px;color:#b8c9e7}
+main>section:first-child>.glass:first-child>.pill span{color:var(--cyan)!important}
+main>section:first-child>.glass:last-child{padding:23px!important;min-height:290px;background:linear-gradient(150deg,rgba(19,21,42,.94),rgba(10,12,25,.97))}
+#trackName{color:#f2f3ff;font-size:17px;line-height:1.45}#trackMeta{color:#8994b2}
+audio{width:100%;height:42px;filter:saturate(.78);accent-color:var(--cyan)}
+#sourcePlayer{margin-top:22px;opacity:.9}
+main>section:first-child .grid.grid-cols-2>div{background:rgba(5,7,19,.45)!important;border:1px solid rgba(156,121,255,.18)!important;border-radius:15px!important;padding:14px!important}
+#selectedLabel{color:#7eefff}main>section:first-child .grid.grid-cols-2 .font-semibold{font-size:13px}
+main>div.flex.flex-col.sm\:flex-row{align-items:end!important;margin:38px 0 18px!important}
+main>div.flex.flex-col.sm\:flex-row h2{font-size:clamp(22px,3vw,30px);letter-spacing:-.035em}main>div.flex.flex-col.sm\:flex-row p{color:#8f99b8;line-height:1.6}
+#search{background:rgba(14,16,34,.88)!important;border:1px solid rgba(156,121,255,.28)!important;border-radius:14px!important;color:#f5f5ff!important;min-height:46px;box-shadow:inset 0 1px rgba(255,255,255,.025);transition:border-color .2s,box-shadow .2s}
+#search::placeholder{color:#727d9c}#search:focus{border-color:rgba(105,240,255,.65)!important;box-shadow:0 0 0 4px rgba(105,240,255,.07)}
+#categories{gap:8px!important;padding:3px 0 14px}#categories button{cursor:pointer;transition:.2s ease}#categories button:hover{border-color:rgba(105,240,255,.55);color:#e5fcff;transform:translateY(-1px)}
+#toolGrid{gap:13px!important}
+.card{min-height:190px;background:linear-gradient(145deg,rgba(21,24,45,.94),rgba(12,14,29,.97));border:1px solid rgba(143,130,215,.2);border-radius:19px;box-shadow:0 10px 28px rgba(0,0,0,.12);padding:19px!important;text-align:left;transition:transform .22s,border-color .22s,box-shadow .22s;position:relative;overflow:hidden}
+.card:after{content:"";position:absolute;left:0;top:0;width:3px;height:0;background:linear-gradient(#69f0ff,#b084ff,#ff68c9);transition:height .25s}
+.card:hover{transform:translateY(-4px);border-color:rgba(105,240,255,.5);box-shadow:0 18px 38px rgba(0,0,0,.28),0 0 28px rgba(105,240,255,.055)}.card:hover:after,.card.active:after{height:100%}.card.active{border-color:rgba(105,240,255,.7);box-shadow:0 0 0 1px rgba(105,240,255,.08),0 15px 36px rgba(0,0,0,.25)}
+.card .font-bold{font-size:16px;letter-spacing:-.02em;color:#f3f4ff}.card p{color:#98a2c0;line-height:1.65}.card .text-cyan-200{color:#72edff!important}.card .text-\[10px\]{color:#8994b5!important;letter-spacing:.15em}
+.btn{background:linear-gradient(105deg,#66efff 0%,#a28aff 55%,#e67fdf 100%);color:#090b19;border:0;border-radius:13px;padding:14px 18px;font-weight:850;letter-spacing:.015em;box-shadow:0 8px 25px rgba(105,240,255,.12);transition:transform .2s,filter .2s,box-shadow .2s}
+.btn:hover{transform:translateY(-1px);filter:brightness(1.06);box-shadow:0 12px 32px rgba(156,121,255,.2)}.btn:disabled{transform:none;filter:grayscale(.3)}
+#rack{margin-top:25px!important;border-radius:25px!important;padding:clamp(20px,3vw,34px)!important;scroll-margin-top:90px;background:radial-gradient(ellipse at 100% 0%,rgba(156,121,255,.13),transparent 38%),linear-gradient(145deg,rgba(20,21,42,.98),rgba(10,12,25,.98))}
+#rackTitle{font-size:clamp(25px,4vw,38px);letter-spacing:-.04em;line-height:1.15}#rackDesc{max-width:760px;line-height:1.7;color:#a5aecb;font-size:14px}
+#closeRack{border-radius:12px;min-width:42px;min-height:42px;font-size:12px;background:rgba(255,104,201,.08);border-color:rgba(255,104,201,.3);color:#ffc3e9;cursor:pointer}#closeRack:hover{background:rgba(255,104,201,.16)}
+#control1,#control2,#trimControls,#formatControls{background:rgba(6,8,21,.46)!important;border:1px solid rgba(156,121,255,.22)!important;border-radius:17px!important;padding:19px!important}
+#control1 label,#control2 label{color:#d6dcf2}input[type=range]{accent-color:var(--cyan);height:24px;cursor:pointer}input[type=number],select{background:#0b0e20!important;border:1px solid rgba(156,121,255,.28)!important;border-radius:12px!important;color:#f2f4ff!important}
+#render{min-height:52px;font-size:13px;letter-spacing:.09em;text-transform:uppercase}#renderState{color:#a9b3d0;line-height:1.5}
+#result{background:linear-gradient(145deg,rgba(14,35,43,.58),rgba(11,14,29,.86))!important;border:1px solid rgba(105,240,255,.28)!important;border-radius:18px!important}#result h3{color:#a7f5ff!important}#download{color:#9ff4ff;border-color:rgba(105,240,255,.35);text-decoration:none}#outputImage{border:1px solid rgba(156,121,255,.2)}
+footer{border-top:1px solid rgba(156,121,255,.13);margin-top:30px;color:#717c9c!important;letter-spacing:.08em;padding-top:25px!important}
+::selection{background:rgba(105,240,255,.24);color:#fff}
+@media(max-width:640px){header .max-w-7xl{padding-top:12px!important;padding-bottom:12px!important;gap:10px!important}header .h-11{width:39px;height:39px;border-radius:13px}.tracking-wide{font-size:13px!important}header .tracking-\[\.24em\]{font-size:8px!important;letter-spacing:.13em!important}#serverState{display:none}.btn{padding:11px 13px}main.max-w-7xl{padding:20px 13px 0!important}main>section:first-child>.glass:first-child{min-height:270px;padding:25px 22px!important}main>section:first-child>.glass:last-child{min-height:0;padding:20px!important}main>section:first-child>.glass:first-child h1{font-size:clamp(2.45rem,12vw,3.4rem)}#toolGrid{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px!important}.card{min-height:188px;padding:14px!important;border-radius:16px}.card .font-bold{font-size:14px}.card p{font-size:12px;line-height:1.55}.card .text-xs{font-size:10px}#categories{flex-wrap:nowrap;overflow-x:auto;padding-bottom:12px;scrollbar-width:none}#categories::-webkit-scrollbar{display:none}#categories button{white-space:nowrap;flex-shrink:0}main>div.flex.flex-col.sm\:flex-row{align-items:stretch!important}#rack{border-radius:20px!important;padding:19px!important}#rackTitle{font-size:27px}#closeRack{font-size:0;min-width:39px;min-height:39px}#closeRack:after{content:"×";font-size:23px}#control1,#control2{padding:15px!important}#render{font-size:11px;letter-spacing:.045em}}
+@media(max-width:370px){#toolGrid{grid-template-columns:1fr}.card{min-height:0}.card p{font-size:13px}}
+
+
+#rack{position:fixed;inset:0;z-index:60;overflow-y:auto;overscroll-behavior:contain;padding:18px!important;margin:0!important;border:0!important;border-radius:0!important;background:rgba(3,5,14,.84)!important;backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);scroll-margin:0!important}
+.rack-dialog{width:min(100%,900px);margin:18px auto 30px;background:radial-gradient(ellipse at 100% 0%,rgba(156,121,255,.14),transparent 38%),linear-gradient(145deg,#14152a,#0a0c19)!important;border:1px solid rgba(133,119,190,.22)!important;box-shadow:0 25px 90px #0009!important}
+#effectFile{display:none}
+@media(max-width:640px){#rack{padding:10px!important}.rack-dialog{margin:8px auto 18px;padding:18px!important;border-radius:20px!important}#rack .flex.items-start.justify-between{gap:10px!important}#rack .btn{white-space:nowrap}}
+
+</style>
+</head>
+<body class="min-h-screen">
+<header class="sticky top-0 z-20 border-b border-slate-700/70 bg-[#080d16]/90 backdrop-blur-xl">
+ <div class="max-w-7xl mx-auto px-4 sm:px-6 py-4 flex items-center justify-between gap-4">
+  <div class="flex items-center gap-3"><div class="h-11 w-11 rounded-2xl grid place-items-center border border-cyan-300/40 bg-cyan-300/10 text-cyan-200 text-xl">A</div><div><div class="font-black tracking-wide">AKHIL <span class="text-cyan-200">AUDIO</span></div><div class="text-[10px] tracking-[.24em] muted uppercase">Studio Pro · DSP Console</div></div></div>
+  <div class="flex items-center gap-3"><span id="serverState" class="pill">Checking engine…</span><label class="btn !py-2.5 !px-3 text-xs cursor-pointer">Load audio<input id="globalFile" type="file" accept="audio/*" class="hidden"></label></div>
+ </div>
+</header>
+<main class="max-w-7xl mx-auto px-4 sm:px-6 py-8">
+ <section class="grid lg:grid-cols-[1.35fr_.65fr] gap-5 mb-8">
+  <div class="glass rounded-3xl p-6 sm:p-8">
+   <div class="pill inline-flex mb-4">AUDIO WORKSTATION <span class="text-cyan-200 ml-2">● LOCAL ENGINE</span></div>
+   <h1 class="text-3xl sm:text-5xl font-black leading-tight max-w-2xl">Shape your sound.<br><span class="text-cyan-200">Own the mix.</span></h1>
+  </div>
+  <div class="glass rounded-3xl p-5 flex flex-col justify-between">
+   <div><div class="text-xs uppercase tracking-[.2em] muted">Current track</div><div id="trackName" class="font-bold text-lg mt-2 break-words">No audio selected</div><div id="trackMeta" class="muted text-sm mt-1">Choose a file to begin.</div></div>
+   <audio id="sourcePlayer" controls class="w-full mt-5"></audio>
+   <div class="grid grid-cols-2 gap-3 mt-4"><div class="rounded-2xl bg-black/20 border border-slate-700 p-3"><div class="muted text-xs">Selected tool</div><div id="selectedLabel" class="font-semibold mt-1">None</div></div><div class="rounded-2xl bg-black/20 border border-slate-700 p-3"><div class="muted text-xs">Output</div><div class="font-semibold mt-1">320 kbps MP3</div></div></div>
+  </div>
+ </section>
+ <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-5">
+  <div><h2 class="text-xl font-bold">Effect library</h2><p class="muted text-sm mt-1">Select a tool, tune its parameters, then render.</p></div>
+  <input id="search" placeholder="Search effects…" class="w-full sm:w-72 rounded-xl bg-[#0d1520] border border-slate-700 px-4 py-3 text-sm">
+ </div>
+ <div id="categories" class="flex flex-wrap gap-2 mb-5"></div>
+ <div id="toolGrid" class="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3"></div>
+ <section id="rack" class="hidden" role="dialog" aria-modal="true" aria-labelledby="rackTitle">
+  <div class="rack-dialog glass rounded-3xl p-5 sm:p-7"><div class="flex items-start justify-between gap-4"><div><div class="pill inline-flex mb-3">EFFECT RACK</div><h2 id="rackTitle" class="text-2xl font-black">Selected effect</h2><p id="rackDesc" class="muted text-sm mt-2"></p></div><button id="closeRack" class="pill" aria-label="Close effect panel">×</button></div>
+  <div class="grid md:grid-cols-2 gap-4 mt-6">
+   <div id="control1" class="rounded-2xl bg-black/20 border border-slate-700 p-4"><div class="flex justify-between gap-3 text-sm mb-3"><label id="label1">Intensity</label><strong id="value1" class="text-cyan-200">6</strong></div><input id="param1" type="range" min="0" max="20" value="6" step="1"></div>
+   <div id="control2" class="rounded-2xl bg-black/20 border border-slate-700 p-4"><div class="flex justify-between gap-3 text-sm mb-3"><label id="label2">Tone</label><strong id="value2" class="text-violet-200">2</strong></div><input id="param2" type="range" min="0" max="20" value="2" step="1"></div>
+   <div id="trimControls" class="hidden md:col-span-2 grid grid-cols-2 gap-3"><label class="text-sm muted">Start (seconds)<input id="trimStart" type="number" min="0" value="0" class="block w-full mt-2 rounded-xl bg-black/30 border border-slate-700 p-3 text-white"></label><label class="text-sm muted">End (seconds)<input id="trimEnd" type="number" min=".1" value="30" class="block w-full mt-2 rounded-xl bg-black/30 border border-slate-700 p-3 text-white"></label></div>
+   <div id="formatControls" class="hidden"><label class="text-sm muted">Export format<select id="format" class="block w-full mt-2 rounded-xl bg-black/30 border border-slate-700 p-3 text-white"><option>mp3</option><option>wav</option><option>flac</option><option>ogg</option><option>m4a</option></select></label></div>
+  </div>
+  <div class="effect-upload-row"><label class="effect-upload-btn" for="effectFile"><span class="upload-symbol" aria-hidden="true">↑</span><span><strong>Upload song</strong><small>Choose audio for this effect</small></span><span class="upload-arrow" aria-hidden="true">↗</span><input id="effectFile" type="file" accept="audio/*" class="hidden"></label></div>
+  <div id="effectGuide" class="mt-5 rounded-2xl border border-violet-300/20 bg-black/20 p-5">
+   <div class="text-[10px] uppercase tracking-[.2em] text-cyan-200 mb-2">Effect guide</div>
+   <h3 id="guideTitle" class="font-bold text-lg">How to use this effect</h3>
+   <p id="guideBody" class="muted text-sm leading-7 mt-2">Choose an effect, load your audio, adjust its controls, then render. Start with small changes and compare the result with your original track.</p>
+   <div class="grid sm:grid-cols-2 gap-3 mt-4">
+    <div class="rounded-xl border border-slate-700/70 bg-black/20 p-3"><div class="text-xs uppercase tracking-wider muted mb-2">Before processing</div><audio id="beforePlayer" controls preload="metadata"></audio></div>
+    <div class="rounded-xl border border-cyan-300/20 bg-cyan-950/10 p-3"><div class="text-xs uppercase tracking-wider text-cyan-200 mb-2">After processing</div><audio id="afterPlayer" controls preload="metadata"></audio><p id="compareHint" class="muted text-xs mt-2">Render an effect to hear the processed result here.</p></div>
+   </div>
+  </div>
+  <div class="flex flex-col sm:flex-row gap-3 mt-6"><button id="render" class="btn flex-1">Apply DSP &amp; Render Output</button><div id="renderState" class="muted text-sm self-center" role="status"></div></div>
+  <div id="result" class="hidden mt-6 rounded-2xl border border-emerald-400/30 bg-emerald-950/10 p-4"><div class="flex items-center justify-between gap-3 mb-3"><h3 class="font-bold text-emerald-200">Rendered output</h3><a id="download" class="pill" download="Akhil_Studio_Output.mp3">Download file ↓</a></div><audio id="outputPlayer" controls class="w-full hidden"></audio><img id="outputImage" class="hidden w-full rounded-xl" alt="Generated audio visualization"><pre id="outputInfo" class="hidden whitespace-pre-wrap text-sm"></pre></div>
+  </div>
+ </section>
+ <footer class="muted text-xs text-center py-8">AKHIL AUDIO STUDIO PRO · Shape your sound. Build your vibe. Master your mix.</footer>
+</main>
+<script>
+const groups = [
+ {name:"Smart Mastering",items:[
+ ["auto-master-magic","Auto Master","Balanced master EQ, compression and loudness control.","Bass gain (dB)",1,12,7,"Treble gain (dB)",0,8,4],
+ ["smart-instrumental-blend","Instrumental Blend","Stereo width, bass warmth and ambience.","Bass gain (dB)",1,12,7,"Stereo width",1,2.5,1.8],
+ ["poyo-ai","PoYo-style Master","Local DSP preset; does not call a cloud AI API.","Bass gain (dB)",1,12,6,"Treble gain (dB)",1,8,4],
+ ["pixazo-ai","Pixazo-style Enhance","Local enhancement preset; no external API call.","Presence (dB)",1,8,4,"Loudness (dB)",0,5,2],
+ ["studio-master","Studio Master","Polish the low and high end with compression.","Warmth",2,12,8,"Treble gain (dB)",1,10,4],
+ ["hq-enhance","Crystal HD","Enhance high-frequency detail and low-end body.","Treble gain (dB)",2,10,6,"Bass gain (dB)",-3,8,3]]},
+ {name:"Effects",items:[
+ ["3d-audio","3D Audio","Rotating stereo motion with ambience.","Rotation speed",1,20,5,"Stereo width",1,2.5,1.8],
+ ["autopanner","Auto Panner","Move audio between left and right channels.","Pan speed (Hz)",0.1,5,.5,"Pan width (%)",20,100,100],
+ ["bass-booster","Bass Booster","Boost low frequencies with peak limiting.","Bass gain (dB)",-6,18,8,"Center frequency (Hz)",50,250,100],
+ ["equalizer","Equalizer","Adjust bass and treble independently.","Bass gain (dB)",-18,18,4,"Treble gain (dB)",-18,18,3],
+ ["noise-reducer","Noise Reducer","Reduce steady hiss and low rumble; results vary by source.","Denoise strength",1,20,10,"Rumble cut (Hz)",60,400,150],
+ ["pitch-shifter","Pitch Shifter","Transpose pitch by semitones.","Semitones",-12,12,3],
+ ["reverb-vocal-only","Vocal Reverb","AI-isolated vocal reverb when Demucs is installed; otherwise reverb on the full mix.","Delay size",1,25,8,"Decay (%)",20,85,55],
+ ["reverb-full-song","Full Song Reverb","Add spacious echo to the full mix.","Room size",1,25,8,"Decay (%)",20,85,50],
+ ["reverb","Reverb","Adjustable echo reflections.","Room size",2,100,50,"Decay (%)",20,85,45],
+ ["reverse","Reverse Audio","Play the track backwards.","Output gain (dB)",-12,12,0],
+ ["stereo-panner","Stereo Panner","Pan left or right.","Left ↔ Right",-10,10,0],
+ ["tempo","Tempo Changer","Change playback speed; pitch may change slightly.","Speed multiplier",.5,2,1.15],
+ ["trimmer","Trimmer / Cutter","Export a selected section of the source audio.","",0,1,0],
+ ["vocal-remover","Vocal Remover","AI source separation when Demucs is installed; otherwise center-cancellation fallback.","Strength",0,12,3],
+ ["instrument-extractor","Instrumental Extractor","AI stem separation when Demucs is installed; otherwise center-cancellation fallback.","Bass gain",0,12,4,"Low-pass (Hz)",1500,8000,4000],
+ ["vocal-isolator","Vocal Isolator","Extract the vocal stem with AI separation when Demucs is installed; fallback filters the mix.","Vocal clarity",1,10,5],
+ ["vocal-chop","Vocal Chop / Stutter","Rhythmic chopped texture; works on the full mix, not isolated vocals.","Chop rate",2,12,4],
+ ["vocal-presence","Vocal Presence","Bring forward vocal-range clarity in a full mix.","Presence (dB)",1,6,3,"Air (dB)",0,4,2],
+ ["de-esser","De-Esser","Soften sharp sibilance around the upper vocal range.","Reduction",1,8,4],
+ ["smooth-flow","Smooth Flow Master","Gentle compression, tonal balance and loudness control for a smoother master.","Smoothness",1,10,6],
+ ["warm-analog","Warm Analog","Warm low end and soften harsh highs.","Warmth",0,5,2,"Air", -2,3,1],
+ ["club-pump","Club Pump","Pulsing club-style movement with controlled bass.","Bass gain (dB)",2,10,5,"Pump speed",1,8,3],
+ ["reels-slowed-reverb","Reels Slowed + Reverb","Slow, spacious short-form edit with controlled echo.","Slow (%)",72,98,85,"Reverb amount",5,80,35],
+ ["reels-sped-up","Reels Speed Up","Bright, energetic speed-up sound for Shorts and Reels.","Speed (%)",4,35,12],
+ ["phonk-reels","Phonk / Sigma Edit","Punchy low end and forward midrange for phonk-style edits.","Bass",5,14,9],
+ ["sad-reels","Sad Slowed Edit","Slower, softer, echo-rich atmosphere for emotional edits.","Slow (%)",78,96,88,"Echo amount",5,75,45],
+ ["romantic-reels","Romantic Reels","Gentle clarity, warm low end and subtle ambience.","Room size",5,35,18],
+ ["dreamy-vocal","Dreamy Vocal","Presence and airy echo for a dreamy vocal-style mix.","Echo size",5,45,18],
+ ["glitch-edit","Glitch / Stutter FX","Phaser movement and rhythmic modulation for an electronic edit.","Phaser speed",2,12,5,"Modulation speed",4,16,8],
+ ["cinematic-drop","Cinematic Impact","Filtered buildup-style tone, ambience and punchy low end.","Filter tone",2,24,18,"Echo size",4,35,18],
+ ["viral-master","Viral Reels Master","Balanced EQ, compression and loudness for short-form playback.","Intensity",1,10,6],
+ ["clean-vocal-mix","Clean Vocal Mix","Noise reduction and presence shaping for a full mix.","Clarity",1,10,6],
+ ["bass-drop-impact","Bass Drop Impact","Deep low end and controlled impact without uncontrolled peaks.","Bass impact",5,15,10,"Sub frequency (Hz)",45,100,65],
+ ["stereo-reels","Stereo Motion","Wide stereo movement for headphones; effect varies by source.","Width",1,10,5,"Motion speed",1,15,6],
+ ["phonk-maker","Phonk Maker","Phonk-style tone, punchy bass and compressed mix.","Bass intensity",4,14,9],
+ ["brazilian-funk","Brazilian Funk Style","Rhythmic, bass-forward processing for funk edits.","Bass",3,12,7,"Pulse rate",2,12,6],
+ ["drift-phonk","Drift Phonk","Aggressive low end and forward mids for drift edits.","Bass",5,15,10],
+ ["cowbell-layer","Cowbell Layer","Generate and mix a metallic cowbell-like oscillator over the song.","Tone volume",1,10,5,"Tone frequency (Hz)",500,1800,900],
+ ["808-bass-layer","808 Bass Layer","Generate and mix a continuous sub-bass oscillator; not a complete 808 drum pattern.","Layer volume",1,14,8,"Sub frequency (Hz)",35,90,55],
+ ["funk-drum-pulse","Funk Drum Pulse","Generate and mix a rhythmic low pulse layer with adjustable volume and rate.","Layer volume",1,10,5,"Pulse rate",3,14,7],
+ ["dark-synth","Dark Synth Texture","Dark filtered, phaser-style electronic texture.","Filter",2,14,8,"Movement",1,10,4],
+ ["beat-drop-impact","Beat Drop Impact","Punchy bass and echo for a drop-style impact.","Impact",4,12,8,"Echo size",5,35,16],
+ ["lofi-remix","Lo-Fi Remix","Softened highs, slower feel and subtle echo.","Tempo (%)",82,100,92],
+ ["romantic-remix","Romantic Remix","Warm, gentle presence with a light echo tail.","Room size",5,35,18],
+ ["reels-master","Reels Master","Balanced EQ, compression and loudness for short-form playback.","Master strength",1,10,6],
+ ["volume","Volume Changer","Adjust output gain.","Gain (dB)",-24,18,3],
+ ["lofi","Lo-Fi","Warm filtered tone and slowed texture.","Muffle",1,20,10,"Tape speed (%)",75,100,90],
+ ["nightcore","Nightcore","Raise speed and pitch with bass control.","Pitch / speed",1,20,10,"Bass gain (dB)",0,12,4],
+ ["underwater","Underwater","Dark low-pass filter with echo.","Depth",1,20,12],
+ ["phone-call","Phone Call","Telephone-style narrow frequency band.","Bandwidth",5,20,12],
+ ["concert-hall","Concert Hall","Longer reflections and wider stereo image.","Hall size",1,20,10,"Decay (%)",20,85,55],
+ ["radio-broadcast","Radio Broadcast","Band-limited compressed broadcast sound.","Compression ratio",2,10,5],
+ ["chipmunk","Chipmunk","Raise pitch and speed for a bright character effect.","Pitch level",1,20,12],
+ ["demon-dark","Dark / Demon","Lower pitch and add bass.","Pitch depth",1,20,12,"Bass gain (dB)",5,18,12],
+ ["spatial-wide","Stereo Widener","Expand stereo width; use headphones to check mono compatibility.","Width",1,18,8],
+ ["vinyl-crackles","Vinyl Warmth","Filtered tone with gentle pitch modulation.","Wobble",1,16,6],
+ ["phaser-fx","Phaser Sweep","Moving phase effect.","Sweep speed",1,20,8,"Decay (%)",20,85,45],
+ ["flanger-fx","Flanger Sweep","Metallic jet-like modulation.","Depth",1,20,10,"Sweep rate",1,30,5],
+ ["tremolo-fx","Tremolo","Rhythmic volume modulation.","Pulse speed",1,20,8,"Depth (%)",20,95,70],
+ ["vibrato-fx","Vibrato","Modulate pitch periodically.","Vibrato rate",1,20,8,"Depth (%)",20,90,50],
+ ["club-punch","Club Punch","Bass emphasis and compressed punch.","Kick gain (dB)",3,18,10,"Output drive (dB)",-3,5,2],
+ ["ambient-space","Ambient Space","Long echo with softened high frequencies.","Delay size",5,25,12],
+ ["cyberpunk-fx","Cyberpunk Synthwave","Phaser, band-limiting and bass emphasis.","Bass drive",4,16,10],
+ ["sub-bass-drop","Sub-Bass Drop","Low-frequency emphasis; monitor playback volume.","Sub gain (dB)",5,18,12,"Sub frequency (Hz)",45,120,60]]},
+ {name:"Additional Effects",items:[
+ ["echo-fx","Echo FX","Adjustable echo delay and decay on the complete track.","Delay (ms)",30,700,180,"Decay (%)",10,85,45],
+ ["stereo-widening","Stereo Widening","Expand the stereo image with mono-compatibility caution.","Width",1,20,8]],},
+ {name:"Remix Styles",items:[
+ ["sad-remix","Sad Remix","Slower, softer tonal balance with spacious echo.","Speed (%)",78,96,88,"Echo amount (%)",10,75,45],
+ ["dark-remix","Dark Remix","Dark filtering, low-end weight and subtle phaser movement.","Darkness",1,20,10,"Movement",1,10,4],
+ ["aggressive-remix","Aggressive Remix","Punchy bass and forward mids with controlled compression.","Bass intensity",4,14,10,"Mid aggression",1,5,3],
+ ["cinematic-remix","Cinematic Remix","Spacious reflections, stereo width and controlled dynamics.","Space size",5,30,18,"Wetness (%)",20,65,40],
+ ["ambient-remix","Ambient Remix","Softened top end, ambience and spacious stereo.","Tone warmth",1,25,12,"Echo amount (%)",20,70,45],
+ ["echo-remix","Echo Remix","Musical echo with presence shaping.","Delay size",5,35,18,"Decay (%)",15,80,45],
+ ["concert-hall-remix","Concert Hall Remix","Layered long reflections and wider stereo ambience.","Hall size",5,35,20,"Decay (%)",20,80,50],
+ ["underwater-remix","Underwater Remix","Deep filtered underwater-style ambience.","Depth",1,20,12,"Echo amount (%)",10,70,35],
+ ["vinyl-remix","Vinyl Remix","Filtered analog-style tone with subtle pitch modulation.","Warmth",1,25,12,"Wobble amount",1,16,6],
+ ["slowed-remix","Slowed Remix","Lower playback pitch and slower duration with a light echo.","Speed (%)",70,98,85,"Echo amount (%)",5,70,30],
+ ["reverb-remix","Reverb Remix","Spacious echo reflections across the complete mix.","Room size",5,35,18,"Wetness (%)",15,80,45],
+ ["dreamy-remix","Dreamy Remix","Airy presence with smooth, dreamy echo.","Echo size",5,40,18,"Wetness (%)",15,60,35],
+ ["space-remix","Space Remix","Wide stereo and long cosmic delay.","Stereo width",1,12,6,"Echo amount (%)",20,70,45],
+ ["chill-remix","Chill Remix","Gentle low-end warmth and smooth, subtle ambience.","Warmth",1,10,5,"Ambience (%)",5,40,20],
+ ["bass-boost-remix","Bass Boost Remix","Bass-forward remix with compression and peak control.","Bass gain (dB)",2,16,9,"Frequency (Hz)",45,150,80],
+ ["dance-remix","Dance Remix","Bright dance-oriented EQ and punchy dynamics.","Bass gain (dB)",2,9,5,"Presence (dB)",1,4,2],
+ ["club-remix","Club Remix","Club-inspired bass, brightness and controlled compression.","Bass gain (dB)",3,12,7,"Treble gain (dB)",1,5,3],
+ ["atmospheric-remix","Atmospheric Remix","Wide ambience, soft phasing and spacious echo.","Space size",5,35,18,"Echo amount (%)",20,75,45]]},
+ {name:"Utilities",items:[
+ ["converter","Format Converter","Export to MP3, WAV, FLAC, OGG or M4A.","",0,1,0],
+ ["downmixer","Mono Downmix","Combine channels to mono.","Gain (dB)",-12,12,0],
+ ["spectrogram","Spectrogram","Generate a frequency visualization PNG.","",0,1,0],
+ ["waveform","Waveform Image","Generate a waveform PNG.","",0,1,0]]},
+ {name:"Presets",items:[
+ ["preset-8d-audio","8D Audio","Rotating stereo preset.","Rotation speed",1,20,3,"Bass warmth (dB)",0,10,3],
+ ["preset-slowed-reverb","Slowed + Reverb","Slower playback with echo.","Playback speed (%)",65,98,85,"Reverb size",5,25,10],
+ ["preset-432hz","432 Hz Tuning","Pitch conversion preset, not a scientific or perceptual guarantee.","Bass gain (dB)",0,10,2],
+ ["preset-very-light-bass","Very Light Bass","Subtle bass lift.","Bass gain (dB)",0,10,3,"Frequency (Hz)",50,250,100],
+ ["preset-light-bass","Light Bass","Gentle bass lift.","Bass gain (dB)",0,12,5,"Frequency (Hz)",50,250,100],
+ ["preset-moderate-bass","Moderate Bass","More prominent bass.","Bass gain (dB)",0,15,8,"Frequency (Hz)",50,250,100],
+ ["preset-heavy-bass","Heavy Bass","Heavy bass with peak limiting.","Bass gain (dB)",0,18,12,"Frequency (Hz)",50,250,110],
+ ["preset-extreme-bass","Extreme Bass","Strong bass boost; check speakers and clipping.","Bass gain (dB)",0,20,16,"Frequency (Hz)",50,250,115],
+ ["preset-vocal-reverb","Vocal Reverb","Short vocal-style echo.","Delay",4,20,9,"Decay (%)",20,80,40],
+ ["preset-bathroom-reverb","Bathroom Reverb","Short, bright reflections.","Reflection delay",4,20,8,"Decay (%)",20,80,45],
+ ["preset-small-room-reverb","Small Room","Tight room ambience.","Room size",5,20,11,"Decay (%)",20,80,40],
+ ["preset-medium-room-reverb","Medium Room","Natural room reflections.","Room size",5,25,12,"Decay (%)",20,85,45],
+ ["preset-large-room-reverb","Large Room","Spacious reflections.","Room size",6,25,14,"Decay (%)",25,85,50],
+ ["preset-church-hall-reverb","Church Hall","Long, layered reflections.","Hall size",8,25,15,"Decay (%)",30,88,55],
+ ["preset-cathedral-reverb","Cathedral","Very long, spacious echo.","Cathedral size",10,25,18,"Decay (%)",35,90,65]]}
+];
+const allTools = groups.flatMap(g=>g.items.map(a=>({group:g.name,id:a[0],title:a[1],desc:a[2],l1:a[3],min1:a[4],max1:a[5],v1:a[6],l2:a[7],min2:a[8],max2:a[9],v2:a[10]})));
+let active=null, file=null, outputUrl=null, imageMode=false, currentCategory="All";
+const $=id=>document.getElementById(id);
+function renderCategories(){const names=["All",...groups.map(g=>g.name)];$("categories").innerHTML=names.map(n=>`<button class="pill ${currentCategory===n?'!border-cyan-200 !text-cyan-100':''}" data-cat="${n}">${n}</button>`).join("");$("categories").querySelectorAll("button").forEach(b=>b.onclick=()=>{currentCategory=b.dataset.cat;renderCategories();renderCards()})}
+function renderCards(){const q=$("search").value.toLowerCase();const list=allTools.filter(t=>(currentCategory==="All"||t.group===currentCategory)&&(t.title+" "+t.desc).toLowerCase().includes(q));$("toolGrid").innerHTML=list.map(t=>`<button class="card text-left rounded-2xl p-4 ${active?.id===t.id?'active':''}" data-id="${t.id}"><div class="flex justify-between items-start gap-3"><span class="text-[10px] uppercase tracking-[.16em] muted">${t.group}</span><span class="text-cyan-200">↗</span></div><div class="font-bold mt-3">${t.title}</div><p class="muted text-sm leading-5 mt-2">${t.desc}</p><div class="text-xs text-cyan-200 mt-4">Open effect rack →</div></button>`).join("");$("toolGrid").querySelectorAll("button").forEach(b=>b.onclick=()=>selectTool(allTools.find(t=>t.id===b.dataset.id)))}
+
+let examplePreviewUrl=null, examplePreviewTimer=null;
+async function renderExamplePreview(t){
+ if(!t || ["spectrogram","waveform"].includes(t.id)) return;
+ $("compareHint").textContent="Preparing effect example…";
+ $("afterPlayer").removeAttribute("src"); $("afterPlayer").load();
+ try{
+  const fd=new FormData(); fd.append("tool",t.id); fd.append("param1",$("param1").value); fd.append("param2",$("param2").value);
+  const res=await fetch("/api/example-render",{method:"POST",body:fd});
+  if(!res.ok){let data={};try{data=await res.json()}catch{}throw new Error(data.error||"Preview unavailable")}
+  const blob=await res.blob();
+  if(examplePreviewUrl) URL.revokeObjectURL(examplePreviewUrl);
+  examplePreviewUrl=URL.createObjectURL(blob);
+  $("afterPlayer").src=examplePreviewUrl;
+  $("compareHint").textContent="Example ready: original Before vs processed After.";
+ }catch(err){$("compareHint").textContent="Example preview unavailable: "+err.message}
+}
+
+function selectTool(t){active=t;$('guideTitle').textContent='How to use '+t.title;$('guideBody').textContent=t.desc+' Load your source track, adjust the available controls gradually, then apply DSP and compare the rendered output against the original. Effect strength depends on the source audio, so preview before exporting.';$('compareHint').textContent='Render this effect to create the after sample.';if(file){if($('beforePlayer').src!==$('sourcePlayer').src)$('beforePlayer').src=$('sourcePlayer').src;}else{$('beforePlayer').src='/api/example-source';}$('afterPlayer').removeAttribute('src');$('afterPlayer').load();$('selectedLabel').textContent=t.title;$("rackTitle").textContent=t.title;$("rackDesc").textContent=t.desc;$("rack").classList.remove("hidden");$("control1").classList.toggle("hidden",!t.l1);$("control2").classList.toggle("hidden",!t.l2);$("trimControls").classList.toggle("hidden",t.id!=="trimmer");$("formatControls").classList.toggle("hidden",t.id!=="converter");if(t.l1){$("label1").textContent=t.l1;$("param1").min=t.min1;$("param1").max=t.max1;$("param1").value=t.v1;$("param1").step=(t.max1-t.min1)>20?5:.1;$("value1").textContent=t.v1}if(t.l2){$("label2").textContent=t.l2;$("param2").min=t.min2;$("param2").max=t.max2;$("param2").value=t.v2;$("param2").step=(t.max2-t.min2)>100?50:.1;$("value2").textContent=t.v2}$("result").classList.add("hidden");renderCards();if(!file)renderExamplePreview(t)}
+$("closeRack").onclick=()=>$("rack").classList.add("hidden");
+$("rack").addEventListener("click",e=>{if(e.target===$("rack"))$("rack").classList.add("hidden")});
+document.addEventListener("keydown",e=>{if(e.key==="Escape")$("rack").classList.add("hidden")});
+$("param1").oninput=()=>{$("value1").textContent=$("param1").value;if(!file&&active){clearTimeout(examplePreviewTimer);examplePreviewTimer=setTimeout(()=>renderExamplePreview(active),450)}};
+$("param2").oninput=()=>{$("value2").textContent=$("param2").value;if(!file&&active){clearTimeout(examplePreviewTimer);examplePreviewTimer=setTimeout(()=>renderExamplePreview(active),450)}};
+$("search").oninput=renderCards;
+function loadFile(f){if(!f)return;file=f;const sourceUrl=URL.createObjectURL(f);$('beforePlayer').src=sourceUrl;$('sourcePlayer').src=sourceUrl;$('afterPlayer').removeAttribute('src');$('afterPlayer').load();$('compareHint').textContent='Original audio loaded. Render an effect to compare.';$('trackName').textContent=f.name;$("trackMeta").textContent=`${(f.size/1024/1024).toFixed(2)} MB · ${f.type||"Audio file"}`;}
+$("globalFile").onchange=e=>loadFile(e.target.files[0]);
+$("effectFile").onchange=e=>{loadFile(e.target.files[0]);e.target.value=""};
+$("render").onclick=async()=>{if(!file){alert("Load an audio file first.");return}if(!active)return;const btn=$("render");btn.disabled=true;$("renderState").textContent="Creating your sound…";$("result").classList.add("hidden");try{const fd=new FormData();fd.append("audio",file);fd.append("tool",active.id);fd.append("param1",$("param1").value);fd.append("param2",$("param2").value);fd.append("start",$("trimStart").value);fd.append("end",$("trimEnd").value);fd.append("format",$("format").value);const res=await fetch("/api/process",{method:"POST",body:fd});if(!res.ok){let j={};try{j=await res.json()}catch{}throw Error(j.error||"Processing failed")}const blob=await res.blob();if(outputUrl)URL.revokeObjectURL(outputUrl);outputUrl=URL.createObjectURL(blob);$('afterPlayer').src=outputUrl;$('compareHint').textContent='Processed output ready. Play both samples to compare.';$('result').classList.remove("hidden");imageMode=["spectrogram","waveform"].includes(active.id);$("outputPlayer").classList.toggle("hidden",imageMode);$("outputImage").classList.toggle("hidden",!imageMode);$("outputInfo").classList.add("hidden");if(imageMode){$("outputImage").src=outputUrl;$("download").download=`Akhil_${active.id}.png`}else{$("outputPlayer").src=outputUrl;$("download").download=`Akhil_${active.id}.${active.id==="converter"?$("format").value:"mp3"}`;$("outputPlayer").play().catch(()=>{})}$("download").href=outputUrl;$("renderState").textContent="Your track is ready!"}catch(err){$("renderState").textContent="Render failed.";alert(err.message)}finally{btn.disabled=false}};
+fetch("/api/status").then(r=>r.json()).then(s=>{$("serverState").textContent=s.status==="online"?"FFmpeg engine online":"FFmpeg missing";$("serverState").classList.toggle("text-emerald-200",s.status==="online")}).catch(()=>$("serverState").textContent="Server offline");
+renderCategories();renderCards();
+</script>
+</body></html>
+
+<style>
+/* Compact effect rack: retain the site's original cyan / violet / pink palette */
+#rack{display:flex;align-items:center;justify-content:center;padding:12px!important;background:rgba(3,5,14,.78)!important;}
+#rack.hidden{display:none!important}
+.rack-dialog{width:min(100%,720px)!important;max-height:calc(100dvh - 24px);overflow-y:auto;overscroll-behavior:contain;margin:0 auto!important;padding:clamp(15px,2.5vw,24px)!important;border-radius:22px!important;background:radial-gradient(ellipse at 100% 0%,rgba(156,121,255,.12),transparent 38%),linear-gradient(145deg,rgba(20,21,42,.98),rgba(10,12,25,.99))!important;border-color:rgba(156,121,255,.27)!important;box-shadow:0 22px 70px rgba(0,0,0,.55)!important}
+#rackTitle{font-size:clamp(22px,4vw,30px)!important}
+#rackDesc{font-size:13px!important;line-height:1.5!important;margin-top:6px!important}
+#rack .pill.inline-flex{margin-bottom:8px!important}
+#rack .grid.md\:grid-cols-2{gap:10px!important;margin-top:16px!important}
+#control1,#control2,#trimControls,#formatControls{padding:13px!important;border-radius:15px!important}
+#effectGuide{margin-top:14px!important;padding:15px!important;border-radius:17px!important}
+#guideBody{font-size:13px!important;line-height:1.65!important}
+#effectGuide .grid{gap:9px!important;margin-top:12px!important}
+#effectGuide audio{height:38px!important}
+#rack .flex.flex-col.sm\:flex-row.gap-3.mt-6{margin-top:14px!important}
+#render{min-height:46px!important;padding:12px 15px!important}
+.effect-upload-row{display:flex;justify-content:center;margin:14px 0 2px}
+.effect-upload-btn{display:flex;align-items:center;justify-content:center;gap:12px;min-width:min(100%,270px);padding:10px 18px;border-radius:15px;cursor:pointer;color:#f5f4ff;border:1px solid rgba(156,121,255,.48);background:linear-gradient(110deg,rgba(105,240,255,.12),rgba(156,121,255,.18),rgba(255,104,201,.12));box-shadow:0 0 22px rgba(156,121,255,.10),inset 0 1px rgba(255,255,255,.05);transition:transform .18s,border-color .18s,box-shadow .18s}
+.effect-upload-btn:hover{transform:translateY(-1px);border-color:rgba(105,240,255,.7);box-shadow:0 0 26px rgba(105,240,255,.12)}
+.effect-upload-btn strong{display:block;font-size:13px;letter-spacing:.02em}.effect-upload-btn small{display:block;margin-top:2px;color:#99a5c2;font-size:10px}
+.upload-symbol{display:grid;place-items:center;width:34px;height:34px;border-radius:11px;background:linear-gradient(135deg,rgba(105,240,255,.24),rgba(156,121,255,.27));border:1px solid rgba(105,240,255,.28);color:#8df4ff;font-size:22px;font-weight:700;line-height:1}
+.upload-arrow{margin-left:8px;color:#b6a5ff;font-size:18px}
+@media(max-width:640px){#rack{padding:8px!important}.rack-dialog{width:100%!important;max-height:calc(100dvh - 16px);padding:15px!important;border-radius:19px!important}.rack-dialog>.flex.items-start.justify-between{gap:8px!important}#rackTitle{font-size:24px!important}#rack .pill.inline-flex{font-size:10px;padding:6px 9px}#closeRack{min-width:37px;min-height:37px}#control1,#control2{padding:12px!important}#effectGuide{padding:13px!important}#effectGuide .grid{grid-template-columns:1fr!important}.effect-upload-btn{min-width:230px}}
+</style>
